@@ -1,0 +1,21 @@
+{
+    "name": "server",
+    "module": "src/index.ts",
+    "type": "module",
+    "scripts": {
+        "dev": "bun --watch src/index.ts"
+    },
+    "dependencies": {
+        "bun-types": "^1.1.0",
+        "@trpc/server": "^10.45.2",
+        "reflect-metadata": "^0.2.2",
+        "sqlite3": "^5.1.7",
+        "trpc-bun-adapter": "^1.1.0",
+        "typeorm": "^0.3.20",
+        "zod": "^3.22.4",
+        "jose": "^5.2.3"
+    },
+    "peerDependencies": {
+        "typescript": "^5.4.3"
+    }
+}

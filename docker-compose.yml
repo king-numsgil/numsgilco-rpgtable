@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  trpc:
+    build:
+      context: ./packages/server
+      dockerfile: Dockerfile
+    image: bun-trpc
+    container_name: bun-trpc
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "8081:443"
+    volumes:
+      - ./packages/client/dist:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./dhparam:/etc/ssl/certs
+    depends_on:
+      - trpc
+    networks:
+      - app-network
+
+  certbot:
+    profiles: ["cli-only"]
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./packages/client/dist:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email king@numsgil.co --agree-tos --no-eff-email --force-renewal -d home.numsgil.co
+
+volumes:
+  certbot-etc:
+  certbot-var:
+
+networks:
+  app-network:
+    driver: bridge

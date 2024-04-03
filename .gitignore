@@ -1,0 +1,4 @@
+node_modules
+*.sqlite
+packages/client/dist
+packages/server/src/**/*.d.ts

@@ -1,0 +1,51 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bunx --bun vite",
+    "build": "tsc && bunx --bun vite build",
+    "preview": "bunx --bun vite preview"
+  },
+  "dependencies": {
+    "server": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@trpc/client": "^10.45.2",
+    "@trpc/server": "^10.45.2",
+    "@trpc/react-query": "^10.45.2",
+    "@tanstack/react-query": "^4.0.0",
+    "@mantine/carousel": "^7.7.1",
+    "@mantine/core": "^7.7.1",
+    "@mantine/dates": "^7.7.1",
+    "@mantine/dropzone": "^7.7.1",
+    "@mantine/form": "^7.7.1",
+    "@mantine/hooks": "^7.7.1",
+    "@mantine/modals": "^7.7.1",
+    "@mantine/notifications": "^7.7.1",
+    "@mantine/spotlight": "^7.7.1",
+    "@mantine/tiptap": "^7.7.1",
+    "@mantine/vanilla-extract": "^7.7.1",
+    "@tabler/icons-react": "^3.1.0",
+    "@tiptap/extension-link": "^2.2.4",
+    "@tiptap/react": "^2.2.4",
+    "@tiptap/starter-kit": "^2.2.4",
+    "dayjs": "^1.11.10",
+    "embla-carousel-react": "^8.0.0",
+    "@vanilla-extract/css": "^1.14.2",
+    "react-router-dom": "^6.22.3",
+    "react-helmet-async": "^2.0.4",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.0",
+    "@types/react": "^18.2.73",
+    "@types/react-dom": "^18.2.23",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vanilla-extract/vite-plugin": "^4.0.7",
+    "vite-tsconfig-paths": "^4.3.2",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.7"
+  }
+}

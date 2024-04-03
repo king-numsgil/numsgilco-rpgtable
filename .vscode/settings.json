@@ -1,0 +1,18 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/tsconfig.tsbuildinfo": true,
+        "packages/**/*.d.ts": true,
+        "bun.lockb": true,
+        "packages/client/dist": true
+    },
+    "hide-files.files": [
+        "bun.lockb",
+        "packages/client/dist"
+    ]
+}
