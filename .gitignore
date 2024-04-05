@@ -1,4 +1,5 @@
 node_modules
+desktop.ini
 *.sqlite
 packages/client/dist
 packages/server/src/**/*.d.ts

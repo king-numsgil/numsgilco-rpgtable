@@ -11,7 +11,7 @@
         "server:build": "cd packages/server && bunx tsc",
         "data:spell": "cd packages/data-processor && bun spell.ts",
         "data:feat": "cd packages/data-processor && bun feat.ts",
-        "dev": "concurrently 'bun run client:dev' 'bun run server:dev'",
+        "dev": "bunx --bun concurrently 'bun run client:dev' 'bun run server:dev'",
         "build": "bun run server:build; bun run client:build"
     },
     "devDependencies": {

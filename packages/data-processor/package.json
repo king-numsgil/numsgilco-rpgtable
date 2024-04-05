@@ -3,14 +3,13 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
-    "bun-types": "^1.1.0",
+    "bun-types": "^1.1.1",
     "@types/lodash": "^4.17.0"
   },
   "peerDependencies": {
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4"
   },
   "dependencies": {
-    "csv": "^6.3.8",
     "exceljs": "^4.4.0",
     "lodash": "^4.17.21"
   }
