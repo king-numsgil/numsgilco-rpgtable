@@ -2,10 +2,12 @@ import { createBunServeHandler } from 'trpc-bun-adapter';
 
 import { router, publicProcedure, createContext } from 'trpc';
 import { pathfinderRouter } from 'pathfinder';
+import { utilsRouter } from 'utils';
 import { userRouter } from 'user';
 
 const appRouter = router({
     pathfinder: pathfinderRouter,
+    utils: utilsRouter,
     user: userRouter,
     ping: publicProcedure
         .query(({ ctx }) => {

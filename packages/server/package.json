@@ -13,7 +13,8 @@
         "trpc-bun-adapter": "^1.1.0",
         "typeorm": "^0.3.20",
         "zod": "^3.22.4",
-        "jose": "^5.2.3"
+        "jose": "^5.2.3",
+        "ohm-js": "^17.1.0"
     },
     "peerDependencies": {
         "typescript": "^5.4.3"
