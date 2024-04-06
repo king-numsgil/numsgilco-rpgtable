@@ -1,14 +1,27 @@
 import { RouteObject } from "react-router-dom";
 
-import Spell from "./Spell";
-import Feat from "./Feat";
-
 export const routes: Array<RouteObject> = [
     {
         path: "database",
         children: [
-            Spell,
-            Feat,
+            {
+                path: "spell/:spellId?",
+                async lazy() {
+                    const { SpellPage } = await import("./Spell");
+                    return {
+                        Component: SpellPage,
+                    };
+                },
+            },
+            {
+                path: "feat/:featId?",
+                async lazy() {
+                    const { FeatPage } = await import("./Feat");
+                    return {
+                        Component: FeatPage,
+                    };
+                },
+            },
         ],
     },
 ];

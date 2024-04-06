@@ -1,7 +1,7 @@
 import { TextInput, SimpleGrid, Card, Group, Text, Badge, Modal, Button, ActionIcon, Overlay, Loader, Portal, Center, NativeSelect } from '@mantine/core';
 import { useDisclosure, useDebouncedValue, useInViewport } from "@mantine/hooks";
-import { RouteObject, useParams, useNavigate } from 'react-router-dom';
 import { FC, useState, useEffect, Suspense, Fragment } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { IconSettings, IconX } from '@tabler/icons-react';
 import { Helmet } from 'react-helmet-async';
 
@@ -244,7 +244,7 @@ const FilterModal: FC<{
     </Modal>;
 };
 
-const SpellPage: FC = () => {
+export const SpellPage: FC = () => {
     const [filterOpened, { open: filterOpen, close: filterClose }] = useDisclosure(false);
     const [opened, { open, close }] = useDisclosure(false);
     const [input, setInput] = useState<FilterType>({});
@@ -310,9 +310,3 @@ const SpellPage: FC = () => {
         </Suspense>
     </>;
 };
-
-const route: RouteObject = {
-    path: "spell/:spellId?",
-    element: <SpellPage />,
-};
-export default route;

@@ -1,9 +1,8 @@
-import { RouteObject } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { trpc } from 'trpc';
 import { FC } from 'react';
 
-const Feat: FC = () => {
+export const FeatPage: FC = () => {
     const pingQuery = trpc.ping.useQuery();
 
     return <>
@@ -13,9 +12,3 @@ const Feat: FC = () => {
         <h1>Vite + React ({pingQuery.data})</h1>
     </>;
 };
-
-const route: RouteObject = {
-    path: "feat",
-    element: <Feat />,
-};
-export default route;
