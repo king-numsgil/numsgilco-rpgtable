@@ -8,7 +8,7 @@
     "client:dev": "cd packages/client && bun run dev",
     "client:build": "cd packages/client && bun run build",
     "server:dev": "cd packages/server && bun run dev",
-    "server:build": "cd packages/server && bunx tsc",
+    "server:build": "cd packages/server && bunx --node tsc",
     "data:spell": "cd packages/data-processor && bun spell.ts",
     "data:feat": "cd packages/data-processor && bun feat.ts",
     "dev": "bunx --bun concurrently 'bun run client:dev' 'bun run server:dev'",
