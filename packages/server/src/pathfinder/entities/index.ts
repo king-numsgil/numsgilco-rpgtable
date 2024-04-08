@@ -37,3 +37,4 @@ export * from "./Patron.entity";
 export * from "./Class.entity";
 export * from "./Deity.entity";
 export * from "./Spell.entity";
+export * from "./Feat.entity";
