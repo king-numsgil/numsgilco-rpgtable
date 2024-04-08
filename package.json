@@ -11,10 +11,10 @@
     "server:build": "cd packages/server && bunx --node tsc",
     "data:spell": "cd packages/data-processor && bun spell.ts",
     "data:feat": "cd packages/data-processor && bun feat.ts",
-    "dev": "bunx --bun concurrently 'bun run client:dev' 'bun run server:dev'",
+    "dev": "bun bun-dev-runner.ts",
     "build": "bun run server:build; bun run client:build"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@types/bun": "^1.0.12"
   }
 }
