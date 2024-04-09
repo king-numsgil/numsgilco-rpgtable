@@ -5,6 +5,7 @@ import { patronRouter } from "./patronRouter";
 import { domainRouter } from "./domainRouter";
 import { classRouter } from "./classRouter";
 import { spellRouter } from "./spellRouter";
+import { featRouter } from "./featRouter";
 import { router } from "trpc";
 
 export const pathfinderRouter = router({
@@ -15,4 +16,5 @@ export const pathfinderRouter = router({
     domain: domainRouter,
     spell: spellRouter,
     class: classRouter,
+    feat: featRouter,
 });

@@ -41,18 +41,18 @@ type SkillPrerequisite = {
     type: "skill";
     name: string;
     rank: number;
-}
+};
 
 type StatPrerequisite = {
     type: "stat";
     name: string;
     value: number;
-}
+};
 
 type SpecialPrerequisite = {
     type: "special";
     condition: string;
-}
+};
 
 type BasePrerequisite = FeatPrerequisite | SkillPrerequisite | StatPrerequisite | SpecialPrerequisite;
 type Prerequisite = BasePrerequisite & { or: Prerequisite | null };

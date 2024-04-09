@@ -16,6 +16,12 @@ import {
     School,
     Subschool,
     Spell,
+    Feat,
+    type FeatType,
+    FeatPrerequisite_Feat,
+    FeatPrerequisite_Skill,
+    FeatPrerequisite_Special,
+    FeatPrerequisite_Stat,
 } from "./entities";
 
 type SpellEntry = {
@@ -131,7 +137,50 @@ type MysteryEntry = {
         "Level 16": string | string[];
         "Level 18": string | string[];
     }
-}
+};
+
+type FeatPrerequisite = {
+    type: "feat";
+    name: string;
+    note: string | null;
+};
+
+type SkillPrerequisite = {
+    type: "skill";
+    name: string;
+    rank: number;
+};
+
+type StatPrerequisite = {
+    type: "stat";
+    name: string;
+    value: number;
+};
+
+type SpecialPrerequisite = {
+    type: "special";
+    condition: string;
+};
+
+type BasePrerequisite = FeatPrerequisite | SkillPrerequisite | StatPrerequisite | SpecialPrerequisite;
+type Prerequisite = BasePrerequisite & { or: Prerequisite | null };
+
+type FeatEntry = {
+    name: string;
+    type: Array<FeatType>;
+    description: string;
+    prerequisites: string | null;
+    prerequisite_data: Array<Prerequisite> | null;
+    benefit: string;
+    normal: string | null;
+    special: string | null;
+    race_name: string | null;
+    note: string | null;
+    goal: string | null;
+    completion_benefit: string | null;
+    source: string;
+    multiples: boolean;
+};
 
 function parseEntry(entry: string): [string, number] {
     const matches = entry.trim().match(/^(.+?)\s\((\d+)\)$/);
@@ -857,6 +906,89 @@ export async function seedMysteries() {
 
         return mystery.save();
     }));
+
+    console.log("Done!");
+}
+
+export async function seedFeats() {
+    console.log("Seeding feats...");
+    const file = Bun.file("./src/pathfinder/data/feats.json");
+    const data = await file.json() as FeatEntry[];
+
+    for (const entry of data) {
+        const feat = new Feat();
+        feat.benefit = entry.benefit;
+        feat.completion_benefit = entry.completion_benefit;
+        feat.description = entry.description;
+        feat.goal = entry.goal;
+        feat.multiples = entry.multiples;
+        feat.name = entry.name;
+        feat.normal = entry.normal;
+        feat.note = entry.note;
+        feat.prerequisites = entry.prerequisites;
+        feat.race_name = entry.race_name;
+        feat.source = entry.source;
+        feat.special = entry.special
+        feat.type = entry.type;
+        feat.requisite_feats = [];
+        feat.requisite_skills = [];
+        feat.requisite_special = [];
+        feat.requisite_stats = [];
+
+        if (entry.prerequisite_data) {
+            for (const req of entry.prerequisite_data) {
+                if (req.type === "skill") {
+                    const skill = new FeatPrerequisite_Skill();
+                    skill.name = req.name;
+                    skill.rank = req.rank;
+                    feat.requisite_skills.push(await skill.save());
+                }
+
+                if (req.type === "stat") {
+                    const stat = new FeatPrerequisite_Stat();
+                    stat.name = req.name;
+                    stat.value = req.value;
+                    feat.requisite_stats.push(await stat.save());
+                }
+
+                if (req.type === "special") {
+                    const special = new FeatPrerequisite_Special();
+                    special.condition = req.condition;
+                    feat.requisite_special.push(await special.save());
+                }
+            }
+        }
+
+        await feat.save();
+    }
+
+    for (const entry of data) {
+        if (entry.prerequisite_data) {
+            const feat = await Feat.findOneOrFail({
+                where: {
+                    name: entry.name,
+                },
+            });
+
+            try {
+                for (const req of entry.prerequisite_data) {
+                    if (req.type === "feat") {
+                        await FeatPrerequisite_Feat.insert({
+                            feat: await Feat.findOneOrFail({
+                                where: {
+                                    name: req.name,
+                                },
+                            }),
+                            note: req.note,
+                            parent: feat,
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error(`${entry.name} : ${e}`);
+            }
+        }
+    }
 
     console.log("Done!");
 }

@@ -9,36 +9,7 @@ import {
     OneToOne,
 } from "typeorm";
 
-type FeatType =
-    | "General"
-    | "Combat"
-    | "Item creation"
-    | "Metamagic"
-    | "Monster"
-    | "Grit"
-    | "Panache"
-    | "Achievement"
-    | "Story"
-    | "Mythic"
-    | "Familiar"
-    | "Teamwork"
-    | "Meditation"
-    | "Conduit"
-    | "Critical"
-    | "Style"
-    | "Performance"
-    | "Racial"
-    | "Companion/Familiar"
-    | "Betrayal"
-    | "Targeting"
-    | "Esoteric"
-    | "Stare"
-    | "Weapon mastery"
-    | "Item mastery"
-    | "Armor mastery"
-    | "Shield mastery"
-    | "Blood hex"
-    | "Trick";
+import type { FeatType } from ".";
 
 @Entity()
 export class Feat extends BaseEntity {
@@ -87,6 +58,9 @@ export class Feat extends BaseEntity {
     multiples!: boolean;
 
     @OneToMany(() => FeatPrerequisite_Feat, prereq => prereq.parent)
+    required_by!: FeatPrerequisite_Feat[];
+
+    @OneToMany(() => FeatPrerequisite_Feat, prereq => prereq.parent)
     requisite_feats!: FeatPrerequisite_Feat[];
 
     @OneToMany(() => FeatPrerequisite_Skill, prereq => prereq.parent)
@@ -107,11 +81,11 @@ export class FeatPrerequisite_Feat extends BaseEntity {
     @ManyToOne(() => Feat, feat => feat.requisite_feats)
     parent!: Feat;
 
-    @OneToOne(() => Feat)
+    @ManyToOne(() => Feat, feat => feat.required_by)
     feat!: Feat;
 
     @Column({ nullable: true })
-    note!: string;
+    note!: string | null;
 }
 
 @Entity()

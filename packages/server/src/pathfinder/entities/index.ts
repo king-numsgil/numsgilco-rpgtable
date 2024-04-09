@@ -29,6 +29,37 @@ export type SpellDescriptor = "acid"
 
 export type Alignment = "Lawful Good" | "Lawful Neutral" | "Lawful Evil" | "Neutral Good" | "Neutral" | "Neutral Evil" | "Chaotic Good" | "Chaotic Neutral" | "Chaotic Evil";
 
+export type FeatType =
+    | "General"
+    | "Combat"
+    | "Item creation"
+    | "Metamagic"
+    | "Monster"
+    | "Grit"
+    | "Panache"
+    | "Achievement"
+    | "Story"
+    | "Mythic"
+    | "Familiar"
+    | "Teamwork"
+    | "Meditation"
+    | "Conduit"
+    | "Critical"
+    | "Style"
+    | "Performance"
+    | "Racial"
+    | "Companion/Familiar"
+    | "Betrayal"
+    | "Targeting"
+    | "Esoteric"
+    | "Stare"
+    | "Weapon mastery"
+    | "Item mastery"
+    | "Armor mastery"
+    | "Shield mastery"
+    | "Blood hex"
+    | "Trick";
+
 export * from "./Bloodline.entity";
 export * from "./Mystery.entity";
 export * from "./School.entity";
