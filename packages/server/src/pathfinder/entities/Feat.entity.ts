@@ -6,7 +6,6 @@ import {
     Index,
     OneToMany,
     ManyToOne,
-    OneToOne,
 } from "typeorm";
 
 import type { FeatType } from ".";
