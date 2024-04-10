@@ -1,15 +1,21 @@
 import { IconSun, IconMoon, IconHome, IconSwords, IconKarate, IconUsers, IconDice, IconDatabase, IconWand, IconNotes, IconArrowUp } from '@tabler/icons-react';
 import { AppShell, Burger, Group, Text, ActionIcon, useMantineColorScheme, ScrollArea, Affix, Transition, Button, rem } from '@mantine/core';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
-import { FC, PropsWithChildren } from "react";
+import { useLocation } from 'react-router-dom';
+import { FC, PropsWithChildren, useEffect } from "react";
 
 import { RouterNavLink } from 'components';
 import * as classes from "./RootLayout.css";
 
 export const RootLayout: FC<PropsWithChildren> = ({ children }) => {
     const { toggleColorScheme, colorScheme } = useMantineColorScheme();
-    const [opened, { toggle }] = useDisclosure();
+    const [opened, { toggle, close }] = useDisclosure();
     const [scroll, scrollTo] = useWindowScroll();
+    const location = useLocation();
+
+    useEffect(() => {
+        close();
+    }, [location]);
 
     return <AppShell
         classNames={{
