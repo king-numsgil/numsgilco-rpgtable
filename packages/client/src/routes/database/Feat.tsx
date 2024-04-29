@@ -1,14 +1,17 @@
+//import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { trpc } from 'trpc';
 import { FC } from 'react';
 
+//import { trpc, type RouterOutputs, RouterInputs } from 'trpc';
+//import { useLazyEffect } from 'utils';
+
 export const FeatPage: FC = () => {
-    const pingQuery = trpc.ping.useQuery();
+    //const { featId } = useParams();
 
     return <>
         <Helmet>
             <title>Feat | Database - NumsgilCo Tabletop</title>
         </Helmet>
-        <h1>Vite + React ({pingQuery.data})</h1>
+        <h1>Pathfinder Feats Database</h1>
     </>;
 };
