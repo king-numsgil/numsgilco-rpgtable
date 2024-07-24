@@ -1,5 +1,3 @@
-import { createBunServeHandler } from 'trpc-bun-adapter';
-
 import { router, publicProcedure, createContext } from 'trpc';
 import { pathfinderRouter } from 'pathfinder';
 import { utilsRouter } from 'utils';
@@ -20,8 +18,17 @@ const appRouter = router({
 
 export type AppRouter = typeof appRouter;
 
-Bun.serve(createBunServeHandler({
-    router: appRouter,
-    endpoint: "/trpc",
-    createContext,
-}));
+import { trpcServer } from '@hono/trpc-server';
+import { Hono } from "hono";
+
+const hono = new Hono();
+hono.use(
+    "/trpc/*",
+    trpcServer({
+        endpoint: "/trpc",
+        router: appRouter,
+        createContext,
+    }),
+);
+
+export default hono;

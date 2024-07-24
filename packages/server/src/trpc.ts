@@ -1,4 +1,4 @@
-import type { CreateBunContextOptions } from 'trpc-bun-adapter';
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { importSPKI, jwtVerify } from "jose";
 import { DataSource } from "typeorm";
@@ -14,7 +14,7 @@ type TokenPayload = {
     };
 };
 
-export async function createContext({ req }: CreateBunContextOptions) {
+export async function createContext({ req }: FetchCreateContextFnOptions) {
     let token: string | null = null;
     if (req.headers.has("Authorization") && req.headers.get("Authorization")?.startsWith("Bearer ")) {
         token = req.headers.get("Authorization")?.split(" ")[1].trim() ?? null;

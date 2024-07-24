@@ -6,15 +6,18 @@
         "dev": "bun --watch src/index.ts"
     },
     "dependencies": {
-        "@types/bun": "^1.0.12",
+        "@hono/trpc-server": "^0.3.2",
         "@trpc/server": "^10.45.2",
+        "@types/bun": "^1.0.12",
+        "bun-livereload": "^1.0.3",
+        "hono": "^4.5.1",
+        "jose": "^5.2.4",
+        "ohm-js": "^17.1.0",
         "reflect-metadata": "^0.2.2",
         "sqlite3": "^5.1.7",
         "trpc-bun-adapter": "^1.1.0",
         "typeorm": "^0.3.20",
-        "zod": "^3.22.4",
-        "jose": "^5.2.4",
-        "ohm-js": "^17.1.0"
+        "zod": "^3.22.4"
     },
     "peerDependencies": {
         "typescript": "^5.4.4"
