@@ -56,7 +56,7 @@ export class Feat extends BaseEntity {
     @Column()
     multiples!: boolean;
 
-    @OneToMany(() => FeatPrerequisite_Feat, prereq => prereq.parent)
+    @OneToMany(() => FeatPrerequisite_Feat, prereq => prereq.feat)
     required_by!: FeatPrerequisite_Feat[];
 
     @OneToMany(() => FeatPrerequisite_Feat, prereq => prereq.parent)

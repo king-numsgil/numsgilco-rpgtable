@@ -1,4 +1,4 @@
-import { ILike, In, Like } from "typeorm";
+import { ILike, In, Like, Not, Raw } from "typeorm";
 import {
     Bloodline,
     BloodlineSpell,
@@ -967,6 +967,7 @@ export async function seedFeats() {
             const feat = await Feat.findOneOrFail({
                 where: {
                     name: entry.name,
+                    type: Raw(alias => `${alias} LIKE '${entry.type.join(",")}'`),
                 },
             });
 
@@ -977,6 +978,9 @@ export async function seedFeats() {
                             feat: await Feat.findOneOrFail({
                                 where: {
                                     name: req.name,
+                                    type: entry.type.includes("Mythic") ? (
+                                        req.note === "mythic" ? Raw(alias => `${alias} LIKE 'Mythic'`) : Not(Raw(alias => `${alias} LIKE 'Mythic'`))
+                                    ) : undefined,
                                 },
                             }),
                             note: req.note,
