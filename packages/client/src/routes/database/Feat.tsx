@@ -1,4 +1,4 @@
-import { TextInput, SimpleGrid, Card, Group, Text, Badge, Modal, Button, ActionIcon, Overlay, Loader, Portal, Center, NativeSelect } from '@mantine/core';
+import { TextInput, SimpleGrid, Card, Group, Text, Badge, Modal, ActionIcon, Overlay, Loader, Portal, Center, NativeSelect, Space } from '@mantine/core';
 import { useDisclosure, useDebouncedValue, useInViewport } from "@mantine/hooks";
 import { FC, useState, useEffect, Suspense, Fragment } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -53,6 +53,38 @@ const FeatModal: FC<{
         <Text><b>Benefit</b>: {feat.benefit}</Text>
         {feat.normal && <Text><b>Normal</b>: {feat.normal}</Text>}
         {feat.special && <Text><b>Special</b>: {feat.special}</Text>}
+
+        {feat.requisite_feats.length > 0 && <>
+            <Space h="md" />
+            <Text size="lg" fw="bold">Required Feats</Text>
+            {feat.requisite_feats.map(({ feat: req }) => <Card
+                key={req.id}
+                classNames={{
+                    root: classes.root,
+                }}
+                mb="sm"
+                onClick={() => navigate(`../feat/${req.id}`)}
+            >
+                <Text fw={500} mb={0}>{req.name}</Text>
+                <FeatEntries feat={req} />
+            </Card>)}
+        </>}
+
+        {feat.required_by.length > 0 && <>
+            <Space h="md" />
+            <Text size="lg" fw="bold">Feats that require this</Text>
+            {feat.required_by.map(({ parent: req }) => <Card
+                key={req.id}
+                classNames={{
+                    root: classes.root,
+                }}
+                mb="sm"
+                onClick={() => navigate(`../feat/${req.id}`)}
+            >
+                <Text fw={500} mb={0}>{req.name}</Text>
+                <FeatEntries feat={req} />
+            </Card>)}
+        </>}
     </Modal>;
 }
 
