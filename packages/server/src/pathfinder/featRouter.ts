@@ -87,11 +87,11 @@ export const featRouter = router({
                 .leftJoinAndSelect("Feat.requisite_special", "requisite_special");
 
             if (input.name) {
-                query.andWhere(`Feat.name LIKE :name`, { name: `%${input.name}%` });
+                query.andWhere(`Feat.name ILIKE :name`, { name: `%${input.name}%` });
             }
 
             if (input.type) {
-                query.andWhere(`Feat.type LIKE :type`, { type: `%${input.type}%` });
+                query.andWhere(`Feat.type ILIKE :type`, { type: `%${input.type}%` });
             }
 
             query.orderBy("Feat.name", "ASC").take(input.pageLength).skip(input.cursor * input.pageLength);

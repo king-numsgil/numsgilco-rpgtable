@@ -1,4 +1,4 @@
-import { ILike, In, Like, Not, Raw } from "typeorm";
+import { ILike, In, Not, Raw } from "typeorm";
 import {
     Bloodline,
     BloodlineSpell,
@@ -360,11 +360,11 @@ export async function seedSpell() {
         row.race = spell.race;
 
         if (spell.school !== "see text") {
-            row.school = await School.findOneOrFail({ where: { name: Like(spell.school) } });
+            row.school = await School.findOneOrFail({ where: { name: ILike(spell.school) } });
         }
 
-        row.subschool = spell.subschool ? await Subschool.findOneOrFail({ where: { name: Like(spell.subschool) } }) : null;
-        row.deity = spell.deity ? await Deity.findOne({ where: { name: Like(spell.deity) } }) : null;
+        row.subschool = spell.subschool ? await Subschool.findOneOrFail({ where: { name: ILike(spell.subschool) } }) : null;
+        row.deity = spell.deity ? await Deity.findOne({ where: { name: ILike(spell.deity) } }) : null;
 
         row.descriptors = [];
         if (spell.acid) {

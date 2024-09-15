@@ -6,4 +6,5 @@ export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>;
 export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
-export const trpc = createTRPCReact<AppRouter>();
+export type TRPC = ReturnType<typeof createTRPCReact<AppRouter>>;
+export const trpc: TRPC = createTRPCReact<AppRouter>();

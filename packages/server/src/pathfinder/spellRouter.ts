@@ -126,7 +126,7 @@ export const spellRouter = router({
                 .leftJoinAndSelect("Spell.deity", "deity");
 
             if (input.name) {
-                query.andWhere(`Spell.name LIKE :name`, { name: `%${input.name}%` });
+                query.andWhere(`Spell.name ILIKE :name`, { name: `%${input.name}%` });
             }
 
             if (input.school) {

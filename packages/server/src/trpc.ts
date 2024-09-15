@@ -21,8 +21,12 @@ export async function createContext({ req }: FetchCreateContextFnOptions) {
     }
 
     const dataSource = new DataSource({
-        type: "sqlite",
-        database: "./server.sqlite",
+        type: "postgres",
+        host: Bun.env.NODE_ENV === "production" ? "pg" : "localhost",
+        port: 5432,
+        username: Env.pgUser,
+        password: Env.pgPassword,
+        database: Env.pgDb,
         synchronize: true,
         entities: ["src/**/*.entity.ts"],
     });
@@ -54,7 +58,22 @@ export async function createContext({ req }: FetchCreateContextFnOptions) {
 const t = initTRPC.context<typeof createContext>().create();
 
 export const router = t.router;
-export const publicProcedure = t.procedure;
+//export const publicProcedure = t.procedure;
+
+export const publicProcedure = t.procedure.use(async (opts) => {
+    const start = Date.now();
+
+    const result = await opts.next();
+
+    const durationMs = Date.now() - start;
+    const meta = { path: opts.path, type: opts.type, durationMs };
+
+    result.ok
+        ? console.log('OK request timing:', meta)
+        : console.error('Non-OK request timing', meta);
+
+    return result;
+});
 
 export const protectedProcedure = publicProcedure.use((opts) => {
     const { ctx } = opts;

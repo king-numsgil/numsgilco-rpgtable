@@ -31,4 +31,7 @@ hono.use(
     }),
 );
 
-export default hono;
+export default {
+    port: 3000,
+    fetch: hono.fetch,
+};
