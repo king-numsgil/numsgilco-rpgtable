@@ -1,4 +1,5 @@
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import cookie, { type CookieSerializeOptions } from "cookie";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { importSPKI, jwtVerify } from "jose";
 import { DataSource } from "typeorm";
@@ -14,7 +15,26 @@ type TokenPayload = {
     };
 };
 
-export async function createContext({ req }: FetchCreateContextFnOptions) {
+export async function createContext({ req, resHeaders }: FetchCreateContextFnOptions) {
+    const getCookies = () => {
+        const cookieHeader = req.headers.get("cookie");
+        if (cookieHeader) {
+            return cookie.parse(cookieHeader);
+        }
+        return {};
+    }
+
+    const getCookie = (name: string): string | undefined => {
+        return getCookies()[name];
+    }
+
+    const setCookie = (name: string, value: string, options?: CookieSerializeOptions) => {
+        const cookieHeader = cookie.serialize(name, value, options);
+        if (cookieHeader) {
+            resHeaders.append("Set-Cookie", cookieHeader);
+        }
+    }
+
     let token: string | null = null;
     if (req.headers.has("Authorization") && req.headers.get("Authorization")?.startsWith("Bearer ")) {
         token = req.headers.get("Authorization")?.split(" ")[1].trim() ?? null;
@@ -49,6 +69,8 @@ export async function createContext({ req }: FetchCreateContextFnOptions) {
     }
 
     return {
+        getCookie,
+        setCookie,
         dataSource,
         token,
         userId,
